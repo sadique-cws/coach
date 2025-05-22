@@ -9,7 +9,6 @@
 
 </head>
 <body class="bg-slate-600">
-
 <?php include "adminHeader.php";?>
 
 
@@ -18,31 +17,14 @@
        <?php include "sidebar.php";?>
     </div>
     <div class="w-4/5">
-        <div class="flex gap-10   ">
-            <div class="flex-1  bg-amber-700 text-white h-auto rounded-xl px-5 py-3">
-                <h2 class="text-white font-bold text-4xl"><?= countData("students where status=0");?></h2>
-                <p class="text-white font-semibold">Total Admission</p>
-            </div>
-            <div class="flex-1 bg-green-700 text-white h-auto rounded-xl px-5 py-3">
-                <h2 class="text-white font-bold text-4xl"><?= countData("students where status=1");?></h2>
-                <p class="text-white font-semibold">Total Students</p>
-            </div>
-            <div class="flex-1 bg-red-700 text-white h-auto rounded-xl px-5 py-3">
-                <h2 class="text-white font-bold text-4xl"><?= countData("courses where status='active'");?></h2>
-                <p class="text-white font-semibold">Total Courses</p>
-            </div>
-            <div class="flex-1 bg-sky-700 text-white h-auto rounded-xl px-5 py-3">
-                <h2 class="text-white font-bold text-4xl">40+</h2>
-                <p class="text-white font-semibold">Total Batchs</p>
-            </div>
-        </div>
+        
 
         <?php 
             $callingAdmission = mysqli_query($connect, "select * from students where status=0");
             $count = mysqli_num_rows($callingAdmission);
             if($count > 0):
         ?>
-            <h2 class="text-2xl mt-10 font-bold text-slate-300">Recent Admission (<?= $count; ?>)</h2>
+            <h2 class="text-2xl mt-10 font-bold text-slate-300">All Admissions (<?= $count; ?>)</h2>
         <div class="flex mt-10">
             <table class="border text-slate-200 border-slate-400 p-3 w-full">
                 <thead>
