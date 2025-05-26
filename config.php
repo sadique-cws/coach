@@ -3,6 +3,8 @@
 $connect = mysqli_connect("localhost","root","","coach") or die("mar gaya re");
 
 
+session_start();
+
 function redirect($page="index.php"){
     echo "<script>window.open('$page','_self')</script>";
 }
@@ -19,6 +21,12 @@ function insertData($query){
     global $connect;
     $query = mysqli_query($connect, $query);
     return (($query)? true : false);
+}
+
+function redirectIfNotLogin(){
+    if(!isset($_SESSION['admin'])){
+        redirect("login.php");
+    }
 }
 
 

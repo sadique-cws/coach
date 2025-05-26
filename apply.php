@@ -1,4 +1,13 @@
-<?php include "config.php";?>
+<?php include "config.php";
+
+$fullnameError = "<p class='text-red-600 font-semibold text-xs'>";
+$fatherError = "<p class='text-red-600 font-semibold text-xs'>";
+$emailError = "<p class='text-red-600 font-semibold text-xs'>";
+$contactError = "<p class='text-red-600 font-semibold text-xs'>";
+
+$flag = false;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,42 +23,113 @@
 
     <?php include "header.php"; ?>
 
+  <?php
+            if (isset($_POST['apply'])) {
+                $fullname = $_POST['fullname'];
+                $father = $_POST['father'];
+                $email = $_POST['email'];
+                $contact = $_POST['contact'];
+                $city = $_POST['city'];
+                $state = $_POST['state'];
+                $school = $_POST['school'];
+                $nationality = $_POST['nationality'];
+                $gender = $_POST['gender'];
 
+
+                // validation
+                
+                if ($fullname == "") {
+                    $fullnameError .= "Fullname is required";
+                    $flag = true;
+                } 
+                elseif (!preg_match("/^[A-z ]{3,}$/", $fullname)) {
+                    $fullnameError .= "Fullname is Invalid or must be atleast 3 character";
+                    $flag = true;
+                } 
+                if ($father == "") {
+                    $flag = true;
+                    $fatherError .= "Father is required";
+                } 
+                elseif (!preg_match("/^[A-z ]{3,}$/", $father)) {
+                    $flag = true;
+                    $fatherError .= "father is Invalid";
+                } 
+                if ($email == "") {
+                    $emailError .= "Email is required";
+                    $flag = true;
+                } 
+                elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                    $emailError .= "Email is Invalid";
+                    $flag = true;
+                }
+                if ($contact == "") {
+                    $contactError .= "contact is required";
+                    $flag = true;
+                } 
+                elseif (!preg_match("/^[6-9]{1}[0-9]{9}$/", $contact)) {
+                    $contactError .= "contact is Invalid";
+                    $flag = true;
+                } 
+
+                if(!$flag){
+
+                    $query = mysqli_query($connect, "insert into students (fullname, father, contact, email, city, state, gender,school, nationality) value ('$fullname','$father','$contact','$email','$city','$state','$gender','$school','$nationality')");
+
+                    if ($query) {
+                        redirect("apply_success.php");
+                    } else {
+                        echo "wah na na wah....";
+                    }
+                }
+
+                $fullnameError .= "</p>";
+                $fatherError .= "</p>";
+                $emailError .= "</p>";
+                $contactError .= "</p>";
+            }
+            ?>
     <div class="px-[10%] py-10 mt-10 flex justify-center w-full">
-        <div class="bg-slate-100 shadow border border-slate-300 w-3/6 p-5">
+        <div class="shadow border <?= ($flag) ? 'border-red-500 bg-red-100' : 'border-slate-300 bg-slate-100 ';?>  w-3/6 p-5">
             <h2 class="text-2xl font-bold">Apply For Join Us</h2>
             <p class="text-slate-500 mt-2">Fill all required Fields </p>
             <hr class="my-2">
+          
             <form action="" method="post" class="grid grid-cols-2 gap-5">
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="fullname" class="text-sm text-slate-600">fullname</label>
                         <input type="text" name="fullname" class="border w-full px-3 py-2 rounded bg-white">
+                        <?= $fullnameError; ?>
                     </div>
                 </div>
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="father" class="text-sm text-slate-600">father</label>
                         <input type="text" name="father" class="border w-full px-3 py-2 rounded bg-white">
+                        <?= $fatherError; ?>
+
                     </div>
                 </div>
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="email" class="text-sm text-slate-600">email</label>
-                        <input type="email" name="email" class="border w-full px-3 py-2 rounded bg-white">
+                        <input type="text" name="email" class="border w-full px-3 py-2 rounded bg-white">
+                        <?= $emailError; ?>
                     </div>
                 </div>
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="contact" class="text-sm text-slate-600">contact</label>
                         <input type="text" name="contact" class="border w-full px-3 py-2 rounded bg-white">
+                        <?= $contactError; ?>
+
                     </div>
                 </div>
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="city" class="text-sm text-slate-600">city</label>
                         <select name="city" class="border w-full px-3 py-2 rounded bg-white">
-                            <option value="" selected disabled>Select City</option>
+                            <option value="" selected>Select City</option>
                             <option>Purnea</option>
                             <option>katihar</option>
                             <option>Ranchi</option>
@@ -60,33 +140,33 @@
                     <div class="flex-1 flex-col flex">
                         <label for="state" class="text-sm text-slate-600">state</label>
                         <select name="state" class="border w-full px-3 py-2 rounded bg-white">
-                            <option value="" selected disabled>Select state</option>
+                            <option value="" selected>Select state</option>
                             <option>Bihar</option>
                             <option>J&K</option>
                             <option>UP</option>
                             <option>MP</option>
                             <option>UK</option>
-                    
+
                         </select>
                     </div>
                 </div>
                 <div class="flex ">
-                      <div class="flex-1 flex-col flex">
+                    <div class="flex-1 flex-col flex">
                         <label for="school" class="text-sm text-slate-600">school</label>
                         <input type="text" name="school" class="border w-full px-3 py-2 rounded bg-white">
                     </div>
                 </div>
                 <div class="flex ">
-                      <div class="flex-1 flex-col flex">
+                    <div class="flex-1 flex-col flex">
                         <label for="nationality" class="text-sm text-slate-600">nationality</label>
                         <input type="text" name="nationality" class="border w-full px-3 py-2 rounded bg-white">
                     </div>
                 </div>
                 <div class="flex col-span-2">
-                      <div class="flex-1 flex-col flex">
+                    <div class="flex-1 flex-col flex">
                         <label for="gender" class="text-sm text-slate-600">gender</label>
-                        <select  name="gender" class="border w-full px-3 py-2 rounded bg-white">
-                            <option value="" selected disabled>Select Gender</option>
+                        <select name="gender" class="border w-full px-3 py-2 rounded bg-white">
+                            <option value="" selected>Select Gender</option>
                             <option>Male</option>
                             <option>female</option>
                             <option>Other</option>
@@ -103,29 +183,7 @@
                     </div>
                 </div>
             </form>
-            <?php 
-            if(isset($_POST['apply'])){
-                $fullname = $_POST['fullname'];
-                $father = $_POST['father'];
-                $email = $_POST['email'];
-                $contact = $_POST['contact'];
-                $city = $_POST['city'];
-                $state = $_POST['state'];
-                $school = $_POST['school'];
-                $nationality = $_POST['nationality'];
-                $gender = $_POST['gender'];
 
-
-                $query = mysqli_query($connect, "insert into students (fullname, father, contact, email, city, state, gender,school, nationality) value ('$fullname','$father','$contact','$email','$city','$state','$gender','$school','$nationality')");
-
-                if($query){
-                    redirect("apply_success.php");
-                }
-                else{
-                    echo "wah na na wah....";
-                }
-            }
-            ?>
         </div>
     </div>
 
