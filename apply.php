@@ -98,14 +98,14 @@ $flag = false;
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="fullname" class="text-sm text-slate-600">fullname</label>
-                        <input type="text" name="fullname" class="border w-full px-3 py-2 rounded bg-white">
+                        <input type="text" name="fullname" value="<?= (isset($_POST['fullname']))? $_POST['fullname']: null?>" class="border w-full px-3 py-2 rounded bg-white">
                         <?= $fullnameError; ?>
                     </div>
                 </div>
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="father" class="text-sm text-slate-600">father</label>
-                        <input type="text" name="father" class="border w-full px-3 py-2 rounded bg-white">
+                        <input type="text" name="father" value="<?= (isset($_POST['father']))? $_POST['father']: null?>" class="border w-full px-3 py-2 rounded bg-white">
                         <?= $fatherError; ?>
 
                     </div>
@@ -113,14 +113,14 @@ $flag = false;
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="email" class="text-sm text-slate-600">email</label>
-                        <input type="text" name="email" class="border w-full px-3 py-2 rounded bg-white">
+                        <input type="text" name="email" value="<?= (isset($_POST['email']))? $_POST['email']: null?>" class="border w-full px-3 py-2 rounded bg-white">
                         <?= $emailError; ?>
                     </div>
                 </div>
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="contact" class="text-sm text-slate-600">contact</label>
-                        <input type="text" name="contact" class="border w-full px-3 py-2 rounded bg-white">
+                        <input type="text" name="contact" value="<?= (isset($_POST['contact']))? $_POST['contact']: null?>" class="border w-full px-3 py-2 rounded bg-white">
                         <?= $contactError; ?>
 
                     </div>
@@ -129,7 +129,13 @@ $flag = false;
                     <div class="flex-1 flex-col flex">
                         <label for="city" class="text-sm text-slate-600">city</label>
                         <select name="city" class="border w-full px-3 py-2 rounded bg-white">
-                            <option value="" selected>Select City</option>
+                            <?php 
+                            if(isset($_POST['city'])){
+                                $city = $_POST['city'];
+                                echo "<option value='$city' selected>$city</option>";
+                            }
+                            ?>
+                            <option value="">Select City</option>
                             <option>Purnea</option>
                             <option>katihar</option>
                             <option>Ranchi</option>
@@ -140,7 +146,13 @@ $flag = false;
                     <div class="flex-1 flex-col flex">
                         <label for="state" class="text-sm text-slate-600">state</label>
                         <select name="state" class="border w-full px-3 py-2 rounded bg-white">
-                            <option value="" selected>Select state</option>
+                            <?php 
+                            if(isset($_POST['state'])){
+                                $state = $_POST['state'];
+                                echo "<option value='$state' selected>$state</option>";
+                            }
+                            ?>
+                            <option value="">Select state</option>
                             <option>Bihar</option>
                             <option>J&K</option>
                             <option>UP</option>
@@ -153,20 +165,26 @@ $flag = false;
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="school" class="text-sm text-slate-600">school</label>
-                        <input type="text" name="school" class="border w-full px-3 py-2 rounded bg-white">
+                        <input type="text" name="school" value="<?= (isset($_POST['school']))? $_POST['school']: null?>" class="border w-full px-3 py-2 rounded bg-white">
                     </div>
                 </div>
                 <div class="flex ">
                     <div class="flex-1 flex-col flex">
                         <label for="nationality" class="text-sm text-slate-600">nationality</label>
-                        <input type="text" name="nationality" class="border w-full px-3 py-2 rounded bg-white">
+                        <input type="text" name="nationality" value="<?= (isset($_POST['nationality']))? $_POST['nationality']: null?>" class="border w-full px-3 py-2 rounded bg-white">
                     </div>
                 </div>
                 <div class="flex col-span-2">
                     <div class="flex-1 flex-col flex">
                         <label for="gender" class="text-sm text-slate-600">gender</label>
                         <select name="gender" class="border w-full px-3 py-2 rounded bg-white">
-                            <option value="" selected>Select Gender</option>
+                            <?php 
+                            if(isset($_POST['gender'])){
+                                $gender = $_POST['gender'];
+                                echo "<option value='$gender' selected>$gender</option>";
+                            }
+                            ?>
+                            <option value="">Select Gender</option>
                             <option>Male</option>
                             <option>female</option>
                             <option>Other</option>
