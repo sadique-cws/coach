@@ -4,6 +4,7 @@ $fullnameError = "<p class='text-red-600 font-semibold text-xs'>";
 $fatherError = "<p class='text-red-600 font-semibold text-xs'>";
 $emailError = "<p class='text-red-600 font-semibold text-xs'>";
 $contactError = "<p class='text-red-600 font-semibold text-xs'>";
+$passwordError = "<p class='text-red-600 font-semibold text-xs'>";
 
 $flag = false;
 
@@ -34,6 +35,7 @@ $flag = false;
                 $school = $_POST['school'];
                 $nationality = $_POST['nationality'];
                 $gender = $_POST['gender'];
+                $password = $_POST['password'];
 
 
                 // validation
@@ -71,9 +73,14 @@ $flag = false;
                     $flag = true;
                 } 
 
-                if(!$flag){
+                if(strlen($password) <= 6){
+                    $passwordError = "Password must be atleast 6 character ";
+                    $flag = true;
+                }
 
-                    $query = mysqli_query($connect, "insert into students (fullname, father, contact, email, city, state, gender,school, nationality) value ('$fullname','$father','$contact','$email','$city','$state','$gender','$school','$nationality')");
+                if(!$flag){
+                    $password = md5($password);
+                    $query = mysqli_query($connect, "insert into students (fullname, father, contact, email, city, state, gender,school, nationality, password) value ('$fullname','$father','$contact','$email','$city','$state','$gender','$school','$nationality','$password')");
 
                     if ($query) {
                         redirect("apply_success.php");
@@ -86,6 +93,7 @@ $flag = false;
                 $fatherError .= "</p>";
                 $emailError .= "</p>";
                 $contactError .= "</p>";
+                $passwordError .= "</p>";
             }
             ?>
     <div class="px-[10%] py-10 mt-10 flex justify-center w-full">
@@ -192,8 +200,17 @@ $flag = false;
                     </div>
                 </div>
 
+                <div class="flex ">
+                    <div class="flex-1 flex-col flex">
+                        <label for="password" class="text-sm text-slate-600">password</label>
+                        <input type="password" name="password" class="border w-full px-3 py-2 rounded bg-white">
+                        <?= $passwordError; ?>
+
+                    </div>
+                </div>
+
                 <div class="mb-3 col-span-2">
-                    <div class="flex ">
+                    <div class="flex w-full">
                         <div class="flex-1 flex-col flex">
 
                             <input type="submit" name="apply" class="bg-teal-700 w-full border px-3 py-2 rounded shadow-sm text-white" value="Apply Now">

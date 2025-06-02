@@ -23,9 +23,9 @@ function insertData($query){
     return (($query)? true : false);
 }
 
-function redirectIfNotLogin(){
-    if(!isset($_SESSION['admin'])){
-        redirect("login.php");
+function redirectIfNotLogin($session = "admin", $redirectPage = "login.php"){
+    if(!isset($_SESSION[$session])){
+        redirect($redirectPage);
     }
 }
 
